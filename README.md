@@ -1,5 +1,5 @@
 # pimpfans
-= AMD GPU Fan Control Tool for Mixed GPU Rigs =
+AMD GPU Fan Control Tool for Mixed GPU Rigs
 
 This quick script adjusts the fan speed of all AMD GPUs found in a Linux based system to a fixed speed.  The speed is defined as a value from 0 to 255. 255 is 100%, 0 is 0%.  If no value is given, the default is around 88%.
 
