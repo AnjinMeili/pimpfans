@@ -34,10 +34,10 @@ ls -l /sys/class/drm | gawk '
                                         Outdir = sprintf("%s/%s",outdir,tdir) ;
                                         PwmEnable = sprintf("%s/pwm1_enable",Outdir);
                                         print "1" >> PwmEnable ; close(PwmEnable) ;
-                                        printf "1 >> %s\n",PwmEnable  ;
+                                        printf "echo 1 >> %s\n",PwmEnable  ;
                                         PwmSpeed = sprintf("%s/pwm1",Outdir);
                                         print SPEED >> PwmSpeed ; close(PwmSpeed) ;
-                                        printf "%s >> %s\n",SPEED,PwmSpeed ;
+                                        printf "echo %s >> %s\n",SPEED,PwmSpeed ;
                                         }
                                 }
                         }
