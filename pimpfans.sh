@@ -10,7 +10,7 @@
 #
 
 #
-# Fan Speed, 228 = 90% (255*.90)
+# Fan Speed, 228 = 90% (256*.90)
 export FANSPEED=${1:-228}
 
 echo "Setting fanspeed to $FANSPEED for AMD GPUs"
@@ -27,17 +27,18 @@ ls -l /sys/class/drm | gawk '
                 for(idx in gpus){
                         if(index($NF,gpus[idx])){
                                 cnt = split($NF,tary,"/");
-                                if(cnt==8 && index(tary[cnt],"card")){
+                                hcnt = split(tary[cnt],hary,"-");
+                                if(hcnt==1 && index(tary[cnt],"card")){
                                         outdir = sprintf("/sys/class/drm/%s/device/hwmon",$9);
                                         syscmd = sprintf("ls %s",outdir);
                                         syscmd | getline tdir ; close(syscmd) ;
                                         Outdir = sprintf("%s/%s",outdir,tdir) ;
                                         PwmEnable = sprintf("%s/pwm1_enable",Outdir);
                                         print "1" >> PwmEnable ; close(PwmEnable) ;
-                                        printf "echo 1 >> %s\n",PwmEnable  ;
+                                        printf "card %s # echo 1 >> %s\n",gpus[idx],PwmEnable  ;
                                         PwmSpeed = sprintf("%s/pwm1",Outdir);
                                         print SPEED >> PwmSpeed ; close(PwmSpeed) ;
-                                        printf "echo %s >> %s\n",SPEED,PwmSpeed ;
+                                        printf "card %s # echo %s >> %s\n",gpus[idx],SPEED,PwmSpeed ;
                                         }
                                 }
                         }
